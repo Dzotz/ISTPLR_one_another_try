@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ISTPLR_one.Order>
+
+@{
+    ViewData["Title"] = "Звіти";
+}
+
+<h1>Звіти</h1>
+<form method="get" asp-action="Index">
+    <div class="form-inline form-group">
+        <label class="control-label">Кав'ярня: </label>
+        <select name="id" asp-items="ViewBag.CoffeeShopId" class="form-control"></select>
+
+        <input name="date" type="date" class="form-control" max="@ViewBag.Today" required value="@ViewBag.Today" />
+
+        <input type="submit" value="Знайти звіт" class="btn btn-default" />
+    </div>
+</form>
+    

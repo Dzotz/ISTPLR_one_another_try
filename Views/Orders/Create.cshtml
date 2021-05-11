@@ -1,0 +1,44 @@
+﻿@model ISTPLR_one.Order
+
+@{
+    ViewData["Title"] = "CreateX";
+}
+
+<h1>Створити замовлення</h1>
+
+<h4>Замовлення</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+       
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+           
+            <input type="hidden" value="@ViewBag.OrderDate" asp-for="Date" />
+
+            <div class="form-group">
+                <label asp-for="CashierId" class="control-label"></label>
+                <select asp-for="CashierId" class="form-control" asp-items="ViewBag.CashierId"></select>
+            </div>
+
+            <input type="hidden" value="@ViewBag.CoffeeShopId" asp-for="CoffeeShopId" />
+            <div class="form-group">
+                <label asp-for="BonusId" class="control-label"></label>
+                <select asp-for="BonusId" class="form-control" asp-items="ViewBag.BonusId"><option selected></option></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <!--<a asp-action="Index">Back to List</a>-->
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

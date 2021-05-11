@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ISTPLR_one.Order>
+
+@{
+    ViewData["Title"] = "Замовлення";
+}
+
+<h1>Замовлення у кав'ярні @ViewBag.CoffeeShopName @ViewBag.OrderDate</h1>
+
+@if (ViewBag.isToday)
+{
+    <form method="get" asp-action="Create">
+        <div class="form-inline form-group">
+            <input type="hidden" value="@ViewBag.CoffeeShopId" name="id" />
+            <input type="hidden" value="@ViewBag.OrderDate" name="date" />
+            <input type="submit" value="Cтворити" class="btn btn-default" />
+        </div>
+    </form>
+}
+
+@{int TotalPrice = 0;
+    List<int> values = new List<int>();
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bonus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cashier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoffeeShop)
+            </th>
+            <th>
+                Сума замовлення
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bonus.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cashier.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoffeeShop.Address)
+                </td>
+                <td>
+                    @{ int val = 0;
+                        var list = ViewBag.OrdersWithValues;}
+                    @foreach (var it in list)
+                    {
+                        if (it.Key == item.OrderId)
+                        {
+                            val = it.Value;
+                            break;
+                        }
+                    }
+                    @{TotalPrice += val;
+                        values.Add(val);}
+                    @val
+                </td>
+                <td>
+                    @if (ViewBag.isToday)
+                    {<a asp-action="Edit" asp-route-id="@item.OrderId">Редагувати</a> <span>|</span>}
+                    <a asp-action="Details" asp-route-id="@item.OrderId" asp-route-isToday="@ViewBag.isToday">Позиції</a>
+                    @if (ViewBag.isToday)
+                    {
+                        @if (item.Positions.Count == 0)
+                        {<a asp-action="Delete" asp-route-id="@item.OrderId">Видалити</a>}
+                        else
+                        { <p> Видаліть усі позиції </p>}
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+<h1>Виручка за день: @TotalPrice </h1>
+
+<div>
+    <h3>Завантаження інформації в файл</h3>
+    <a asp-action="Export" asp-route-id="@ViewBag.CoffeeShopId" asp-route-date="@ViewBag.OrderDate" asp-route-total="@TotalPrice">Завантажити</a>
+</div>
+

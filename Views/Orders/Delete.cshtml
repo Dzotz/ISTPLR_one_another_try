@@ -1,0 +1,45 @@
+﻿@model ISTPLR_one.Order
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Видалити</h1>
+
+<h3>Ви впевнені, що хочете видалити?</h3>
+<div>
+    <h4>Замовлення</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bonus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bonus.Name)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cashier)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cashier.Fathername)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CoffeeShop)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CoffeeShop.Address)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="OrderId" />
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+        <!--<a asp-action="Index" >Повернутись до списку</a>-->
+    </form>
+</div>

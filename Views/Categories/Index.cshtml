@@ -1,0 +1,84 @@
+﻿@model IEnumerable<ISTPLR_one.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Категорії</h1>
+
+<p>
+    <a asp-action="Create">Додати</a>
+</p>
+
+<div>
+    <h3>Оберіть exel-файл для заватаження</h3>
+    @using (Html.BeginForm("Import", "Categories", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+        <div>
+            Завантажте Excel-файл:
+            <input type="file" name="fileExcel" id="fileExcel" />
+            <div>
+                <input type="submit" value="Завантажити" />
+            </div>
+        </div>
+    }
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId">Редагувати</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategoryId">Деталі</a>
+                    @if (item.Products.Count == 0)
+                    {
+                        <span>|</span> <a asp-action="Delete" asp-route-id="@item.CategoryId">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="container">
+    <div id="chart2" style="width: 1200px; height: 500px;"></div>
+</div>
+@section scripts{
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Charts/CategoriesPerDay', function (CategoriesPerDay) {
+                data = google.visualization.arrayToDataTable(CategoriesPerDay, false);
+                var option = {
+                    chart: {
+                        title: 'Категорій в день',
+                        width: 1200,
+                        height: 400
+                    }
+                };
+                var chart = new google.charts.Bar(document.getElementById('chart2'));
+
+                chart.draw(data, google.charts.Bar.convertOptions(option));
+            })
+
+        }
+    </script>
+}
+

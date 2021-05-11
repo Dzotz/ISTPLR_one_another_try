@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ISTPLR_one.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Бонусні картки</h1>
+
+<p>
+    <a asp-action="Create">Додати</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FavoriteProduct)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FavoriteProduct.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ClientId">Редагувати</a> |
+                <a asp-action="Details" asp-route-id="@item.ClientId">Деталі</a>
+                @if (item.Orders.Count == 0)
+                 {
+                   <span>|</span><a asp-action="Delete" asp-route-id="@item.ClientId">Видалити</a>
+                 }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

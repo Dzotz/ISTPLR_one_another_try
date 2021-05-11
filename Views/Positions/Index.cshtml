@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ISTPLR_one.Position>
+
+@{
+    ViewData["Title"] = "Позиції в замовленні";
+}
+
+<h1>Позиції в замовленні № @ViewBag.OrderId</h1>
+
+<p>
+    @if (ViewBag.isToday)
+    {@Html.ActionLink("Додати позицію", "Create", new { orderId = @ViewBag.OrderId })}
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>Ціна</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int price = 0;}
+        @foreach (var item in Model)
+        {
+            { price += item.Product.Price * item.Quantity; }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @{string res = "";}
+                @if (item.ProductId != ViewBag.Discount)
+                {
+                    res = (item.Product.Price * item.Quantity).ToString();
+                }
+                else { price -= item.Product.Price; res = (item.Product.Price * (item.Quantity-1)).ToString(); if (res == "0") res = "Знижка!"; }
+                @res
+            </td>
+
+            <td>
+
+                @if (ViewBag.isToday)
+                {<a asp-action="Edit" asp-route-id="@item.PositionId">Редагувати</a> <span>|</span>}
+
+                <a asp-action="Details" asp-route-id="@item.PositionId">Деталі</a>
+
+                @if (ViewBag.isToday)
+                {
+                    <span>|</span><a asp-action="Delete" asp-route-id="@item.PositionId">Видалити</a>
+                }
+
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+<h1>Ціна замовлення: @price</h1>
+<p>
+@Html.ActionLink("Повернутись", "Index", "Orders", new { id = @ViewBag.OrderCoffeeShop, date =  ViewBag.OrderDate})
+</p>
