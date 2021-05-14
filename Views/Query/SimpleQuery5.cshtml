@@ -1,0 +1,35 @@
+﻿@model Query
+
+@{
+    ViewData["Title"] = "SimpleQuery5";
+}
+
+<h1>Запит 5</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Номер замовлення
+            </th>
+            <th>
+                Дата
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.OrdersId.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model.OrdersId[i].ToString()
+                </td>
+                <td>
+                    @Model.OrdersDate[i].ToShortDateString()
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

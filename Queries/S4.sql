@@ -1,0 +1,2 @@
+Select Owners.Name, Owners.Surname, Owners.PhoneNumber
+from Owners where OwnerID Not IN (Select OwnerID From CoffeeShops Where CoffeeShopID IN (Select CoffeeShopID from Orders Where OrderID In (Select OrderID From Positions Where ProductID = X)));

@@ -1,0 +1,2 @@
+Select Categories.Name
+From Categories Where CategoryID Not IN (Select CategoryID From Products Where ProductID IN (Select ProductID From Positions Where OrderID IN(Select OrderID From Orders Where Orders.CoffeeShopID = X)));

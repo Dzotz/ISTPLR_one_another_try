@@ -1,0 +1,171 @@
+﻿@model Query
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Запити</h1>
+
+<p style="font-size:20px">
+    <b>Запит 1</b>
+</p>
+<p style="font-size:17px">
+    Знайти імена працівників, що працюють на власника O:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SimpleQuery1">
+            <div class="form-group">
+                <label class="control-label">Ім'я власника O</label>
+                <select asp-for="OwnerID" asp-items="@ViewBag.OwnerID" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<p style="font-size:20px">
+    <b>Запит 2</b>
+</p>
+<p style="font-size:17px">
+    Знайти середню ціну продукта в замовленнях у касира Y у день X:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SimpleQuery2">
+            <div class="form-group">
+                <label class="control-label">Ім'я касира Y</label>
+                <select asp-for="CashierId" asp-items="@ViewBag.CashierId" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Дата</label>
+                <input asp-for="OrderDate" type="date" class="form-control" required />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<p style="font-size:20px">
+    <b>Запит 3</b>
+</p>
+<p style="font-size:17px">
+    Знайти назви категорій, що не продавались у кав'ярні X:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SimpleQuery3">
+            <div class="form-group">
+                <label class="control-label">Назва Кав'ярні</label>
+                <select asp-for="CoffeeShopId" asp-items="@ViewBag.CoffeeShopId" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<p style="font-size:20px">
+    <b>Запит 4</b>
+</p>
+<p style="font-size:17px">
+    Знайти імена власників, що не продавали продукт Х:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SimpleQuery4">
+            <div class="form-group">
+                <label class="control-label">Назва продукту Х</label>
+                <select asp-for="ProductId" asp-items="@ViewBag.ProductId" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<p style="font-size:20px">
+    <b>Запит 5</b>
+</p>
+<p style="font-size:17px">
+    Знайти замовлення та їх дати, де були товари ціною Х:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SimpleQuery5">
+            <div class="form-group">
+                <label class="control-label">Ціна Х</label>
+                <input asp-for="ProductPrice" type="number" required min="0" max="999" class="form-control" />
+                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<p style="font-size:20px">
+    <b>Ускладнений запит 1</b>
+</p>
+<p style="font-size:17px">
+    Знайти назви та адреси кав'ярень власника Х де не було жодних замовлень:
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ComplexQuery1">
+            <div class="form-group">
+                <label class="control-label">Ім'я власника O</label>
+                <select asp-for="OwnerID" asp-items="@ViewBag.OwnerID" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<p style="font-size:20px">
+    <b>Ускладнений запит 2</b>
+</p>
+<p style="font-size:17px">
+    Номери замовлень Х дати, де були позиції дорожче 20 у.о.
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ComplexQuery2">
+            <div class="form-group">
+                <label class="control-label">Дата Х</label>
+                <input asp-for="OrderDate" type="date" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<p style="font-size:17px">
+    Телефонні номери бариста з іменем Х, які працюють в кав'ярнях де було більше двох замовлень
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ComplexQuery3">
+            <div class="form-group">
+                <label class="control-label">Ім'я Х</label>
+                <select asp-for="CashierName" asp-items="@ViewBag.Name" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Надіслати" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

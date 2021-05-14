@@ -1,0 +1,10 @@
+﻿@model Query
+
+@{
+    ViewData["Title"] = "SimpleQuery2";
+}
+
+<h1>Запит 1</h1>
+
+
+<h3>Cередня ціна продукту у касира @Model.CashierName @Model.OrderDate.ToShortDateString(): @Model.AvgPrice</h3>

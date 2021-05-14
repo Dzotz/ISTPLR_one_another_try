@@ -27,8 +27,10 @@ namespace ISTPLR_one.Controllers
             ViewBag.OrderDate = neededOrder.Select(o => o.Date).FirstOrDefault().ToShortDateString();
             ViewBag.OrderCoffeeShop = neededOrder.Select(o => o.CoffeeShopId).FirstOrDefault();
             var PositionsInOrder = _context.Positions.Where(b => b.OrderId == id).Include(b=>b.Order).Include(b=>b.Product);
-            var disc = neededOrder.Select(o => o.Bonus.FavoriteProductId).FirstOrDefault();
-            ViewBag.Discount = disc;    
+            if (neededOrder.Select(o => o.Bonus).Any()){
+                var disc = neededOrder.Select(o => o.Bonus.FavoriteProductId).FirstOrDefault(); ViewBag.Discount = disc;
+            }
+            else { ViewBag.Discount = 999; }
             return View(await PositionsInOrder.ToListAsync());
 
         }

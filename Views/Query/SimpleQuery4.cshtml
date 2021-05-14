@@ -1,0 +1,39 @@
+﻿@model Query
+
+@{
+    ViewData["Title"] = "SimpleQuery4";
+}
+
+<h1>Запит 4</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Назва
+            </th>
+            <th>
+                Фамілія
+            </th>
+            <th>
+                Номер телефону
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.OwnerNames.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model.OwnerNames[i]
+                </td>
+                <td>
+                    @Model.OwnerSurnames[i]
+                </td>
+                <td>
+                    @Model.OwnerPhones[i]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
